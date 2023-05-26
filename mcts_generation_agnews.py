@@ -500,7 +500,7 @@ def main():
                         output_sequences = gpt.generate(original_input.input_ids, attention_mask=original_input.attention_mask, min_length=7, max_length=7, do_sample=True, top_p=0.9, num_return_sequences=1)
                 original_input = tokenizer_gpt(tokenizer_gpt.batch_decode(output_sequences, skip_special_tokens=True, clean_up_tokenization_spaces=True), return_tensors="pt", padding="longest", add_special_tokens=True).to("cuda")
                 tokens_pbar = tqdm(total = 97, desc="Tokens generated")
-                for i in range(0, 97):
+                for j in range(0, 97):
                     res_search = MCTS.search(original_input)
                     original_input.input_ids = torch.cat((original_input.input_ids, torch.unsqueeze(torch.cuda.LongTensor(np.argmax(res_search,axis=1)),1)), dim = 1)
                     original_input.attention_mask = torch.cat((original_input.attention_mask, torch.unsqueeze(torch.ones(batch_size, dtype=torch.long, device="cuda"),1)), dim = 1)
